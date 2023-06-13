@@ -6,7 +6,6 @@
   - add/remove conversation members
   - leave conversations
   - change conversation title
-  - mute/unmute conversation
   - remove conversation history
 * Messages
   - send text
