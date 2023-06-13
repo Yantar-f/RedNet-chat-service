@@ -23,7 +23,7 @@ public interface ChatService {
     Mono<ServerResponse> removeConversationHistory(ServerRequest request);
     Mono<ServerResponse> removeMessage(ServerRequest request);
 
-    Mono<ServerResponse> getConversationMessages(ServerRequest request);
-
     Mono<ServerResponse> editConversationTitle(ServerRequest request);
+
+    Mono<ServerResponse> getMessages(ServerRequest request);
 }

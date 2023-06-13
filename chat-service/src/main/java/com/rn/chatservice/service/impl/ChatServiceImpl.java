@@ -49,11 +49,11 @@ public class ChatServiceImpl implements ChatService {
         return null;
     }
 
-    public Mono<ServerResponse> getConversationMessages(ServerRequest request) {
+    public Mono<ServerResponse> editConversationTitle(ServerRequest request) {
         return null;
     }
 
-    public Mono<ServerResponse> editConversationTitle(ServerRequest request) {
+    public Mono<ServerResponse> getMessages(ServerRequest request) {
         return null;
     }
 }
