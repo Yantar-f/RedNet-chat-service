@@ -16,12 +16,14 @@
 
 ## API
 in progress...
+
 ## Database Diagram
 in progress...
 <!-- (![database-diagram](chat-service-database-diagram.png)) -->
 
 ## Technology Stack
 * Business-logic server\
+[![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/)
 [![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)](https://spring.io/)
 * Database\
 [![ApacheCassandra](https://img.shields.io/badge/cassandra-%231287B1.svg?style=for-the-badge&logo=apache-cassandra&logoColor=white)](https://www.cassandra.apache.org/)
