@@ -43,7 +43,7 @@ class ChatServiceImplTest {
     }
 
     @Test
-    void getConversationMembersIDs() {
+    void getConversationMembers() {
     }
 
     @Test

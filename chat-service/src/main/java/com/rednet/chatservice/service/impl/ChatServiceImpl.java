@@ -1,6 +1,7 @@
 package com.rednet.chatservice.service.impl;
 
 import com.rednet.chatservice.entity.Conversation;
+import com.rednet.chatservice.entity.ConversationMember;
 import com.rednet.chatservice.entity.ConversationPreload;
 import com.rednet.chatservice.entity.Message;
 import com.rednet.chatservice.entity.key.ConversationKey;
@@ -58,7 +59,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<String> getConversationMembersIDs(ConversationKey conversationKey) {
+    public List<ConversationMember> getConversationMembers(ConversationKey conversationKey) {
         return null;
     }
 
