@@ -1,6 +1,7 @@
 package com.rednet.chatservice.service;
 
 import com.rednet.chatservice.entity.Conversation;
+import com.rednet.chatservice.entity.ConversationMember;
 import com.rednet.chatservice.entity.ConversationPreload;
 import com.rednet.chatservice.entity.Message;
 import com.rednet.chatservice.entity.key.ConversationKey;
@@ -21,7 +22,7 @@ public interface ChatService {
     void disableConversationNotifications   (ConversationKey conversationKey, String userID);
     void enableConversationNotifications    (ConversationKey conversationKey, String userID);
 
-    List<String>    getConversationMembersIDs   (ConversationKey conversationKey);
-    void            addConversationMembers      (ConversationKey conversationKey, List<String> userIDs, String executorID);
-    void            removeConversationMembers   (ConversationKey conversationKey, List<String> userIDs, String executorID);
+    List<ConversationMember>    getConversationMembers      (ConversationKey conversationKey);
+    void                        addConversationMembers      (ConversationKey conversationKey, List<String> userIDs, String executorID);
+    void                        removeConversationMembers   (ConversationKey conversationKey, List<String> userIDs, String executorID);
 }
