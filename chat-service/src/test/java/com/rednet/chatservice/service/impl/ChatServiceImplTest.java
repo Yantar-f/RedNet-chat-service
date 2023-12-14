@@ -19,6 +19,14 @@ class ChatServiceImplTest {
     }
 
     @Test
+    void getPreviousMessagesFrom() {
+    }
+
+    @Test
+    void getNextMessagesFrom() {
+    }
+
+    @Test
     void pushMessage() {
     }
 
