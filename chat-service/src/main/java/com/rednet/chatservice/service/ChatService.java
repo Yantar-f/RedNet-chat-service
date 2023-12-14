@@ -13,11 +13,12 @@ public interface ChatService {
     List<ConversationPreload>   getConversationsPreload (String userID);
     Conversation                createConversation      (String creatorID, List<String> conversationMembersIDs, String title);
 
-    List<Message>   getLastMessages (ConversationKey conversationKey, int count, String userID);
-    List<Message>   getMessagesFrom (MessageKey messageKey, int count, String userID);
-    Message         pushMessage     (ConversationKey conversationKey, String text, String userID);
-    Message         editMessage     (MessageKey messageKey, String text, String userID);
-    void            deleteMessages  (List<MessageKey> messageKeys, String userID);
+    List<Message>   getLastMessages         (ConversationKey conversationKey, int count, String userID);
+    List<Message>   getPreviousMessagesFrom (MessageKey messageKey, int count, String userID);
+    List<Message>   getNextMessagesFrom     (MessageKey messageKey, int count, String userID);
+    Message         pushMessage             (ConversationKey conversationKey, String text, String userID);
+    Message         editMessage             (MessageKey messageKey, String text, String userID);
+    void            deleteMessages          (List<MessageKey> messageKeys, String userID);
 
     void disableConversationNotifications   (ConversationKey conversationKey, String userID);
     void enableConversationNotifications    (ConversationKey conversationKey, String userID);

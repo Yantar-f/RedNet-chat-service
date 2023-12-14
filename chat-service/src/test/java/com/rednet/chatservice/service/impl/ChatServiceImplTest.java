@@ -19,10 +19,6 @@ class ChatServiceImplTest {
     }
 
     @Test
-    void getMessagesFrom() {
-    }
-
-    @Test
     void pushMessage() {
     }
 

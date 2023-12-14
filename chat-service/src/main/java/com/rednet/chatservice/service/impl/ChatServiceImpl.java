@@ -29,7 +29,12 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<Message> getMessagesFrom(MessageKey messageKey, int count, String userID) {
+    public List<Message> getPreviousMessagesFrom(MessageKey messageKey, int count, String userID) {
+        return null;
+    }
+
+    @Override
+    public List<Message> getNextMessagesFrom(MessageKey messageKey, int count, String userID) {
         return null;
     }
 
