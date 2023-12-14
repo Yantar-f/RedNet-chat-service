@@ -1,12 +1,11 @@
 package com.rednet.chatservice.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.rednet.chatservice.service.ChatService;
 
-@RestController
-public class ChatServiceController {
-    @GetMapping
-    public String hello() {
-        return "Hello";
+public abstract class ChatServiceController {
+    protected final ChatService chatService;
+
+    public ChatServiceController(ChatService chatService) {
+        this.chatService = chatService;
     }
 }

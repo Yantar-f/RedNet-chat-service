@@ -1,4 +1,5 @@
 package com.rednet.chatservice.entity;
 
-public class Message {
-}
+import java.time.Instant;
+
+public record Message (String conversationID, String creatorID, Instant timestamp, String senderID, String text) {}

@@ -2,7 +2,7 @@ package com.rednet.chatservice.service.impl;
 
 import com.rednet.chatservice.entity.Conversation;
 import com.rednet.chatservice.entity.ConversationMember;
-import com.rednet.chatservice.entity.ConversationPreload;
+import com.rednet.chatservice.model.ConversationPreload;
 import com.rednet.chatservice.entity.Message;
 import com.rednet.chatservice.entity.key.ConversationKey;
 import com.rednet.chatservice.entity.key.MessageKey;
@@ -25,12 +25,41 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<ConversationPreload> getConversationsPreload(String userID) {
+        /*List<Conversation> conversations = conversationService.getConversationsByUserID(userID);
+        List<Message> lastMessages = messageService.getLastMessagesPerConversation(
+                conversations
+                        .stream()
+                        .map(c -> new ConversationKey(c.conversationID(), c.creatorID()))
+                        .toList());
+
+        List<ConversationPreload> conversationsPreload = new ArrayList<>(conversations.size());
+
+        for (int length = conversations.size(), i = 0; i < length; ++i) {
+            conversationsPreload.add(new ConversationPreload(conversations.get(i), lastMessages.get(i)));
+        }
+
+        return conversationsPreload;*/
         return null;
     }
 
     @Override
     public Conversation createConversation(String creatorID, List<String> conversationMembersIDs, String title) {
         return null;
+    }
+
+    @Override
+    public List<ConversationMember> getConversationMembers(ConversationKey conversationKey, String userID) {
+        return null;
+    }
+
+    @Override
+    public void addConversationMembers(ConversationKey conversationKey, List<String> userIDs, String executorID) {
+
+    }
+
+    @Override
+    public void removeConversationMembers(ConversationKey conversationKey, List<String> userIDs, String executorID) {
+
     }
 
     @Override
@@ -70,21 +99,6 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void enableConversationNotifications(ConversationKey conversationKey, String userID) {
-
-    }
-
-    @Override
-    public List<ConversationMember> getConversationMembers(ConversationKey conversationKey) {
-        return null;
-    }
-
-    @Override
-    public void addConversationMembers(ConversationKey conversationKey, List<String> userIDs, String executorID) {
-
-    }
-
-    @Override
-    public void removeConversationMembers(ConversationKey conversationKey, List<String> userIDs, String executorID) {
 
     }
 }

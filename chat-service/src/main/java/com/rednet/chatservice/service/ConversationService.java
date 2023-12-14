@@ -1,6 +1,10 @@
 package com.rednet.chatservice.service;
 
 
-public interface ConversationService {
+import com.rednet.chatservice.entity.Conversation;
 
+import java.util.List;
+
+public interface ConversationService {
+    List<Conversation> getConversationsByUserID (String userID);
 }
