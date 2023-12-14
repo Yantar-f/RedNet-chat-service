@@ -1,4 +1,8 @@
 package com.rednet.chatservice.entity;
 
-public class ConversationPreload {
-}
+public record ConversationPreload(
+    String conversationID,
+    String creatorID,
+    String title,
+    Message lastMessage
+) {}

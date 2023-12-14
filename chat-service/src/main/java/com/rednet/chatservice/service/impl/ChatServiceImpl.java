@@ -7,12 +7,22 @@ import com.rednet.chatservice.entity.Message;
 import com.rednet.chatservice.entity.key.ConversationKey;
 import com.rednet.chatservice.entity.key.MessageKey;
 import com.rednet.chatservice.service.ChatService;
+import com.rednet.chatservice.service.ConversationService;
+import com.rednet.chatservice.service.MessageService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ChatServiceImpl implements ChatService {
+    private final ConversationService conversationService;
+    private final MessageService messageService;
+
+    public ChatServiceImpl(ConversationService conversationService, MessageService messageService) {
+        this.conversationService = conversationService;
+        this.messageService = messageService;
+    }
+
     @Override
     public List<ConversationPreload> getConversationsPreload(String userID) {
         return null;
