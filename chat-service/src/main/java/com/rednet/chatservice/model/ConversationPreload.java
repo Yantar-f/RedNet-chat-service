@@ -10,4 +10,20 @@ public record ConversationPreload(String conversationID, String creatorID, Strin
     public ConversationPreload(Conversation conversation) {
         this(conversation.conversationID(), conversation.creatorID(), conversation.title(), null);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (! (obj instanceof ConversationPreload preload)) return false;
+
+        return  preload.conversationID.equals(conversationID) &&
+                preload.creatorID.equals(creatorID) &&
+                preload.title.equals(title) &&
+                preload.lastMessage.equals(lastMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return conversationID.hashCode() * creatorID.hashCode() * title.hashCode() * lastMessage.hashCode();
+    }
 }

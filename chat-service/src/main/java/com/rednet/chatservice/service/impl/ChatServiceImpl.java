@@ -6,11 +6,13 @@ import com.rednet.chatservice.model.ConversationPreload;
 import com.rednet.chatservice.entity.Message;
 import com.rednet.chatservice.entity.key.ConversationKey;
 import com.rednet.chatservice.entity.key.MessageKey;
+import com.rednet.chatservice.model.MessageModel;
 import com.rednet.chatservice.service.ChatService;
 import com.rednet.chatservice.service.ConversationService;
 import com.rednet.chatservice.service.MessageService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,7 +37,7 @@ public class ChatServiceImpl implements ChatService {
         List<ConversationPreload> conversationsPreload = new ArrayList<>(conversations.size());
 
         for (int length = conversations.size(), i = 0; i < length; ++i) {
-            conversationsPreload.add(new ConversationPreload(conversations.get(i), lastMessages.get(i)));
+            conversationsPreload.add(new ConversationPreload(conversations.get(i), new MessageModel(lastMessages.get(i))));
         }
 
         return conversationsPreload;*/
@@ -63,17 +65,17 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<Message> getLastMessages(ConversationKey conversationKey, int count, String userID) {
+    public List<MessageModel> getLastMessages(ConversationKey conversationKey, int count, String userID) {
         return null;
     }
 
     @Override
-    public List<Message> getPreviousMessagesFrom(MessageKey messageKey, int count, String userID) {
+    public List<MessageModel> getPreviousMessagesFrom(MessageKey messageKey, int count, String userID) {
         return null;
     }
 
     @Override
-    public List<Message> getNextMessagesFrom(MessageKey messageKey, int count, String userID) {
+    public List<MessageModel> getNextMessagesFrom(MessageKey messageKey, int count, String userID) {
         return null;
     }
 
