@@ -16,11 +16,19 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 class ChatServiceImplTest {
     private static final int TEST_REPETITIONS_COUNT = 3;
@@ -28,7 +36,7 @@ class ChatServiceImplTest {
     int     stringLengthBound = 200;
     private final MessageService        messageService = mock(MessageService.class);
     private final ConversationService   conversationService = mock(ConversationService.class);
-    private final ChatService           chatService = new ChatServiceImpl(conversationService, messageService);
+    private final ChatService           sut = new ChatServiceImpl(conversationService, messageService);
     private final String expectedUserID = randString();
 
     @AfterEach
@@ -40,40 +48,48 @@ class ChatServiceImplTest {
     void getConversationsPreload() {
         int conversationsCount = rand.nextInt(20);
 
-        List<Conversation>          expectedConversations = new ArrayList<>();
-        List<ConversationKey>       expectedConversationKeys = new ArrayList<>();
-        List<Message>               expectedMessages = new ArrayList<>();
-        List<ConversationPreload>   expectedConversationsPreload = new ArrayList<>();
+        List<Conversation>          expectedConversations = new ArrayList<>(conversationsCount);
+        List<ConversationKey>       expectedConversationKeys = new ArrayList<>(conversationsCount);
+        List<Optional<Message>>     expectedMessages = new ArrayList<>(conversationsCount);
+        List<ConversationPreload>   expectedConversationsPreload = new ArrayList<>(conversationsCount);
 
         for (int i = 0; i < conversationsCount; ++i) {
             ConversationKey conversationKey = new ConversationKey(randString(), randString());
             Conversation    conversation = new Conversation(conversationKey, randString());
 
-            Message message = new Message(
-                    conversation.conversationID(),
-                    conversation.creatorID(),
-                    Instant.now(),
-                    randString(),
-                    randString()
+            Optional<Message> message = Optional.ofNullable(
+                    rand.nextInt() % 2 == 0 ? new Message(
+                        conversation.conversationID(),
+                        conversation.creatorID(),
+                        Instant.now(),
+                        randString(),
+                        randString()
+                    ) : null
             );
 
             expectedConversationKeys.add(conversationKey);
             expectedConversations.add(conversation);
             expectedMessages.add(message);
-            expectedConversationsPreload.add(new ConversationPreload(conversation, new MessageModel(message)));
+
+            message.ifPresentOrElse(msg -> {
+                expectedConversationsPreload.add(new ConversationPreload(conversation, new MessageModel(msg)));
+            }, () -> {
+                expectedConversationsPreload.add(new ConversationPreload(conversation));
+            });
         }
 
         when(conversationService.getConversationsByUserID(any())).thenReturn(expectedConversations);
         when(messageService.getLastMessagesPerConversation(any())).thenReturn(expectedMessages);
 
         assertDoesNotThrow(() -> {
-            List<ConversationPreload> actualConversationsPreload = chatService.getConversationsPreload(expectedUserID);
+            List<ConversationPreload> actualConversationsPreload = sut.getConversationsPreload(expectedUserID);
 
             assertEquals(expectedConversationsPreload.size(), actualConversationsPreload.size());
             assertTrue(expectedConversationsPreload.containsAll(actualConversationsPreload));
         });
 
         verify(conversationService).getConversationsByUserID(eq(expectedUserID));
+
         verify(messageService).getLastMessagesPerConversation(argThat(actualKeys ->
                 expectedConversationKeys.size() == actualKeys.size() &&
                 expectedConversationKeys.containsAll(actualKeys)
@@ -88,7 +104,7 @@ class ChatServiceImplTest {
         when(conversationService.createConversation(any(), any(), any())).thenReturn(expectedConversation);
 
         assertDoesNotThrow(() -> {
-            Conversation actualConversation = chatService.createConversation(
+            Conversation actualConversation = sut.createConversation(
                     expectedConversation.creatorID(),
                     expectedMembersIDs,
                     expectedConversation.title()

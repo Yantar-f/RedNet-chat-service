@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -27,21 +28,26 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<ConversationPreload> getConversationsPreload(String userID) {
-        /*List<Conversation> conversations = conversationService.getConversationsByUserID(userID);
-        List<Message> lastMessages = messageService.getLastMessagesPerConversation(
+        List<Conversation> conversations = conversationService.getConversationsByUserID(userID);
+        List<Optional<Message>> lastMessages = messageService.getLastMessagesPerConversation(
                 conversations
                         .stream()
                         .map(c -> new ConversationKey(c.conversationID(), c.creatorID()))
                         .toList());
 
-        List<ConversationPreload> conversationsPreload = new ArrayList<>(conversations.size());
+        List<ConversationPreload> preload = new ArrayList<>(conversations.size());
 
         for (int length = conversations.size(), i = 0; i < length; ++i) {
-            conversationsPreload.add(new ConversationPreload(conversations.get(i), new MessageModel(lastMessages.get(i))));
+            Conversation conversation = conversations.get(i);
+
+            lastMessages.get(i).ifPresentOrElse(message -> {
+                preload.add(new ConversationPreload(conversation, new MessageModel(message)));
+            }, () -> {
+                preload.add(new ConversationPreload(conversation));
+            });
         }
 
-        return conversationsPreload;*/
-        return null;
+        return preload;
     }
 
     @Override
